@@ -24,28 +24,18 @@
     "Uputstvo": "1. Izrendajte četvrtinu crnog luka i dinstajte na ulju dok ne počne da cvrči.\n2. Dodajte pirinač i tostirajte ga jedan minut, pa nalijte belo vino.\n3. Postepeno dodajte bujon, kutlaču po kutlaču, mešajući dok se ne apsorbuje.\n4. U međuvremenu izblendajte cveklu sa malo vode i otopite gorgonzolu u pavlaci.\n5. Kada je pirinač al dente, umešajte kremu od cvekle.\n6. Isključite vatru i uradite 'mantecaturu' (umešajte hladan puter i parmezan).\n7. Servirajte sa topljenom gorgonzolom, lešnicima i začinskim biljem.",
     "Nutricija": {
       "Kalorije": "830 kcal",
-      "Proteini": {
-        "Vrednost": 18,
-        "Jedinica": "g",
-        "Boja": "#007bff",
-        "ProcenatUdelu": 12
-      },
-      "UgljeniHidrati": {
-        "Vrednost": 82,
-        "Jedinica": "g",
-        "Boja": "#dc3545",
-        "ProcenatUdelu": 55
-      },
-      "Masti": {
-        "Vrednost": 48,
-        "Jedinica": "g",
-        "Boja": "#ffc107",
-        "ProcenatUdelu": 33
-      }
+      "Proteini": { "Vrednost": 18, "Jedinica": "g", "Boja": "#007bff", "ProcenatUdelu": 12 },
+      "UgljeniHidrati": { "Vrednost": 82, "Jedinica": "g", "Boja": "#dc3545", "ProcenatUdelu": 55 },
+      "Masti": { "Vrednost": 48, "Jedinica": "g", "Boja": "#ffc107", "ProcenatUdelu": 33 },
+      "ZasiceneMasti": { "Vrednost": 14.5, "Jedinica": "g", "Boja": "#d39e00" },
+      "Seceri": { "Vrednost": 4.9, "Jedinica": "g", "Boja": "#fd7e14" },
+      "Vlakna": { "Vrednost": 3.6, "Jedinica": "g", "Boja": "#28a745" },
+      "Holesterol": { "Vrednost": 58, "Jedinica": "mg", "Boja": "#6c757d" },
+      "Natrijum": { "Vrednost": 750, "Jedinica": "mg", "Boja": "#20c997" }
     },
     "Preporuka": {
       "Vreme": "Ručak",
-      "Zasto": "Bogato složenim ugljenim hidratima i mastima, idealno za stabilnu energiju tokom dana."
+      "Zasto": "Oprez zbog visokih zasićenih masti iz sireva i putera (loše za LDL holesterol). Cvekla i lešnici daju dobra vlakna."
     }
   },
   "piletina-povrce": {
@@ -67,11 +57,16 @@
       "Kalorije": "420 kcal",
       "Proteini": { "Vrednost": 35, "Jedinica": "g", "Boja": "#007bff", "ProcenatUdelu": 45 },
       "UgljeniHidrati": { "Vrednost": 25, "Jedinica": "g", "Boja": "#dc3545", "ProcenatUdelu": 32 },
-      "Masti": { "Vrednost": 10, "Jedinica": "g", "Boja": "#ffc107", "ProcenatUdelu": 23 }
+      "Masti": { "Vrednost": 10, "Jedinica": "g", "Boja": "#ffc107", "ProcenatUdelu": 23 },
+      "ZasiceneMasti": { "Vrednost": 3.2, "Jedinica": "g", "Boja": "#d39e00" },
+      "Seceri": { "Vrednost": 4.3, "Jedinica": "g", "Boja": "#fd7e14" },
+      "Vlakna": { "Vrednost": 5.0, "Jedinica": "g", "Boja": "#28a745" },
+      "Holesterol": { "Vrednost": 212, "Jedinica": "mg", "Boja": "#6c757d" },
+      "Natrijum": { "Vrednost": 120, "Jedinica": "mg", "Boja": "#20c997" }
     },
     "Preporuka": {
       "Vreme": "Ručak ili Večera",
-      "Zasto": "Visok nivo proteina i umereni hidrati čine ga odličnim obrokom nakon treninga."
+      "Zasto": "Mnogo bolja opcija za trigliceride zbog niskih zasićenih masti i više vlakana iz šargarepe i krompira."
     }
   }
 }

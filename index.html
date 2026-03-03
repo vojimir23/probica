@@ -878,8 +878,16 @@
                             <span class="nutri-badge badge-p">🔵 ${p}g</span>
                             <span class="nutri-badge badge-c">🔴 ${c}g</span>
                             <span class="nutri-badge badge-f">🟡 ${f}g</span>
-                        </div>
                     `;
+
+                    // Dinamičko dodavanje novih vrednosti ako postoje u JSON-u (kratak format za thumbnail)
+                    if (recipe.Nutricija.ZasiceneMasti) badgesHTML += `<span class="nutri-badge" style="background-color: ${recipe.Nutricija.ZasiceneMasti.Boja}">🧈 ${recipe.Nutricija.ZasiceneMasti.Vrednost}${recipe.Nutricija.ZasiceneMasti.Jedinica}</span>`;
+                    if (recipe.Nutricija.Seceri) badgesHTML += `<span class="nutri-badge" style="background-color: ${recipe.Nutricija.Seceri.Boja}">🍬 ${recipe.Nutricija.Seceri.Vrednost}${recipe.Nutricija.Seceri.Jedinica}</span>`;
+                    if (recipe.Nutricija.Vlakna) badgesHTML += `<span class="nutri-badge" style="background-color: ${recipe.Nutricija.Vlakna.Boja}">🌾 ${recipe.Nutricija.Vlakna.Vrednost}${recipe.Nutricija.Vlakna.Jedinica}</span>`;
+                    if (recipe.Nutricija.Holesterol) badgesHTML += `<span class="nutri-badge" style="background-color: ${recipe.Nutricija.Holesterol.Boja}">🩸 ${recipe.Nutricija.Holesterol.Vrednost}${recipe.Nutricija.Holesterol.Jedinica}</span>`;
+                    if (recipe.Nutricija.Natrijum) badgesHTML += `<span class="nutri-badge" style="background-color: ${recipe.Nutricija.Natrijum.Boja}">🧂 ${recipe.Nutricija.Natrijum.Vrednost}${recipe.Nutricija.Natrijum.Jedinica}</span>`;
+
+                    badgesHTML += `</div>`;
                 }
 
                 card.className = `card recipe-thumb-card ${themeClass}`;
@@ -934,8 +942,16 @@
                         <span class="nutri-badge badge-p">🔵 Proteini: ${p}g</span>
                         <span class="nutri-badge badge-c">🔴 U. Hidrati: ${c}g</span>
                         <span class="nutri-badge badge-f">🟡 Masti: ${f}g</span>
-                    </div>
                 `;
+
+                // Dinamičko dodavanje novih vrednosti ako postoje (pun tekst za detaljni prikaz)
+                if (recipe.Nutricija.ZasiceneMasti) badgesHTML += `<span class="nutri-badge" style="background-color: ${recipe.Nutricija.ZasiceneMasti.Boja}">🧈 Z. Masti: ${recipe.Nutricija.ZasiceneMasti.Vrednost}${recipe.Nutricija.ZasiceneMasti.Jedinica}</span>`;
+                if (recipe.Nutricija.Seceri) badgesHTML += `<span class="nutri-badge" style="background-color: ${recipe.Nutricija.Seceri.Boja}">🍬 Šećeri: ${recipe.Nutricija.Seceri.Vrednost}${recipe.Nutricija.Seceri.Jedinica}</span>`;
+                if (recipe.Nutricija.Vlakna) badgesHTML += `<span class="nutri-badge" style="background-color: ${recipe.Nutricija.Vlakna.Boja}">🌾 Vlakna: ${recipe.Nutricija.Vlakna.Vrednost}${recipe.Nutricija.Vlakna.Jedinica}</span>`;
+                if (recipe.Nutricija.Holesterol) badgesHTML += `<span class="nutri-badge" style="background-color: ${recipe.Nutricija.Holesterol.Boja}">🩸 Holesterol: ${recipe.Nutricija.Holesterol.Vrednost}${recipe.Nutricija.Holesterol.Jedinica}</span>`;
+                if (recipe.Nutricija.Natrijum) badgesHTML += `<span class="nutri-badge" style="background-color: ${recipe.Nutricija.Natrijum.Boja}">🧂 Natrijum: ${recipe.Nutricija.Natrijum.Vrednost}${recipe.Nutricija.Natrijum.Jedinica}</span>`;
+
+                badgesHTML += `</div>`;
 
                 chartHTML = `
                     <div class="nutri-chart">
