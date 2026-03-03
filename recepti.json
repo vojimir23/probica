@@ -1,0 +1,77 @@
+{
+  "rizoto-cvekla-gorgonzola": {
+    "Ime": "Rižoto sa cveklom i topljenim gorgonzola sirom",
+    "KratakOpis": "Kremasti italijanski klasik koji spaja zemljane note cvekle sa oštrinom gorgonzole i krckavim lešnicima.",
+    "Vreme": "35 min",
+    "Slike": [
+      "img/recepti/rizoto-cvekla/glavna.jpg",
+      "img/recepti/rizoto-cvekla/detalj.jpg"
+    ],
+    "Sastojci": [
+      "180 g pirinča carnaroli",
+      "povrtni bujon (po potrebi)",
+      "1 mala kuvana cvekla",
+      "1/4 crnog luka",
+      "30 g ulja",
+      "1/2 čaše suvog belog vina",
+      "50 g gorgonzole",
+      "2 kašike tečne pavlake (ili mleka)",
+      "20 g putera",
+      "25 g parmezana",
+      "15 tostiranih lešnika",
+      "majoran i peršun"
+    ],
+    "Uputstvo": "1. Izrendajte četvrtinu crnog luka i dinstajte na ulju dok ne počne da cvrči.\n2. Dodajte pirinač i tostirajte ga jedan minut, pa nalijte belo vino.\n3. Postepeno dodajte bujon, kutlaču po kutlaču, mešajući dok se ne apsorbuje.\n4. U međuvremenu izblendajte cveklu sa malo vode i otopite gorgonzolu u pavlaci.\n5. Kada je pirinač al dente, umešajte kremu od cvekle.\n6. Isključite vatru i uradite 'mantecaturu' (umešajte hladan puter i parmezan).\n7. Servirajte sa topljenom gorgonzolom, lešnicima i začinskim biljem.",
+    "Nutricija": {
+      "Kalorije": "830 kcal",
+      "Proteini": {
+        "Vrednost": 18,
+        "Jedinica": "g",
+        "Boja": "#007bff",
+        "ProcenatUdelu": 12
+      },
+      "UgljeniHidrati": {
+        "Vrednost": 82,
+        "Jedinica": "g",
+        "Boja": "#dc3545",
+        "ProcenatUdelu": 55
+      },
+      "Masti": {
+        "Vrednost": 48,
+        "Jedinica": "g",
+        "Boja": "#ffc107",
+        "ProcenatUdelu": 33
+      }
+    },
+    "Preporuka": {
+      "Vreme": "Ručak",
+      "Zasto": "Bogato složenim ugljenim hidratima i mastima, idealno za stabilnu energiju tokom dana."
+    }
+  },
+  "piletina-povrce": {
+    "Ime": "Zapečena piletina sa povrćem",
+    "KratakOpis": "Brz i zdrav ručak iz rerne, savršen za celu porodicu.",
+    "Vreme": "45 min",
+    "Slike": [
+      "img/recepti/piletina-povrce/slika1.jpg"
+    ],
+    "Sastojci": [
+      "piletina belo meso 500g",
+      "šargarepa 2 kom",
+      "krompir 3 komada",
+      "maslinovo ulje",
+      "začini po ukusu"
+    ],
+    "Uputstvo": "1. Isecite povrće na krupnije komade.\n2. Piletinu začinite i sve pomešajte u plehu.\n3. Prelijte sa malo maslinovog ulja.\n4. Pecite na 200°C oko 45 minuta dok ne porumeni.",
+    "Nutricija": {
+      "Kalorije": "420 kcal",
+      "Proteini": { "Vrednost": 35, "Jedinica": "g", "Boja": "#007bff", "ProcenatUdelu": 45 },
+      "UgljeniHidrati": { "Vrednost": 25, "Jedinica": "g", "Boja": "#dc3545", "ProcenatUdelu": 32 },
+      "Masti": { "Vrednost": 10, "Jedinica": "g", "Boja": "#ffc107", "ProcenatUdelu": 23 }
+    },
+    "Preporuka": {
+      "Vreme": "Ručak ili Večera",
+      "Zasto": "Visok nivo proteina i umereni hidrati čine ga odličnim obrokom nakon treninga."
+    }
+  }
+}
