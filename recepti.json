@@ -1,0 +1,34 @@
+{
+  "piletina-povrce": {
+    "Ime": "Zapečena piletina sa povrćem",
+    "KratakOpis": "Brz i zdrav ručak iz rerne, savršen za celu porodicu.",
+    "Vreme": "45 min",
+    "Slike": [
+      "img/recepti/piletina-povrce/slika1.jpg",
+      "img/recepti/piletina-povrce/slika2.jpg"
+    ],
+    "Sastojci": [
+      "piletina belo meso 500g",
+      "šargarepa 2 kom",
+      "krompir 3 komada",
+      "maslinovo ulje",
+      "začini po ukusu"
+    ],
+    "Uputstvo": "1. Isecite povrće na krupnije komade.\n2. Piletinu začinite i sve pomešajte u plehu.\n3. Prelijte sa malo maslinovog ulja.\n4. Pecite na 200°C oko 45 minuta dok ne porumeni."
+  },
+  "zdravi-smuti": {
+    "Ime": "Jutarnji smuti od bobičastog voća",
+    "KratakOpis": "Vitaminska bomba za savršen početak dana.",
+    "Vreme": "5 min",
+    "Slike": [
+      "https://images.unsplash.com/photo-1556881286-fc6915169721?w=500" 
+    ],
+    "Sastojci": [
+      "smrznuto šumsko voće 150g",
+      "banana 1 kom",
+      "grčki jogurt 2 kašike",
+      "voda ili mleko 200ml"
+    ],
+    "Uputstvo": "1. Ubacite sve sastojke u blender.\n2. Miksajte 30 sekundi dok ne postane glatko.\n3. Poslužite hladno!"
+  }
+}

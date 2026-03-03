@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Diet Plan & Recipes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --primary-color: #2e7d32;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --text-muted: #666666;
+            --border-color: #e0e0e0;
+            --meal-bg: #fafafa;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        header {
+            background-color: var(--primary-color); color: white; padding: 30px 20px;
+            text-align: center; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); position: sticky; top: 0; z-index: 100;
+        }
+        header h1 { font-size: 2rem; margin-bottom: 15px; }
+
+        .tabs { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.2); border: 2px solid transparent; color: white;
+            padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 600;
+            transition: all 0.3s ease; font-size: 1rem;
+        }
+        .tab-btn:hover { background: rgba(255, 255, 255, 0.3); }
+        .tab-btn.active { background: white; color: var(--primary-color); }
+
+        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+
+        .card {
+            background-color: var(--card-bg); border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden; transition: transform 0.2s ease; display: flex; flex-direction: column;
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); }
+
+        .card-header {
+            display: flex; justify-content: space-between; align-items: center; padding: 20px;
+            border-bottom: 1px solid var(--border-color); background-color: var(--card-bg);
+        }
+        .card-header h2 { font-size: 1.4rem; color: var(--primary-color); }
+
+        .fav-btn {
+            background: none; border: none; font-size: 1.5rem; cursor: pointer; transition: transform 0.2s; user-select: none;
+        }
+        .fav-btn:hover { transform: scale(1.2); }
+
+        .card-body { padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+
+        .meal { background-color: var(--meal-bg); padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary-color); }
+        .meal h3 { font-size: 1rem; color: var(--text-main); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .meal p { font-size: 0.95rem; color: var(--text-muted); white-space: pre-line; }
+
+        .empty-state { text-align: center; padding: 50px 20px; font-size: 1.2rem; color: var(--text-muted); grid-column: 1 / -1; }
+
+        /* Ingredients & Cart */
+        .toggle-ing-btn {
+            background-color: #eef2f3; color: var(--text-main); border: 1px solid var(--border-color); padding: 10px;
+            border-radius: 8px; cursor: pointer; font-weight: 600; width: 100%; transition: background-color 0.2s; margin-top: 5px;
+        }
+        .toggle-ing-btn:hover { background-color: #e0e5e6; }
+        .ingredients-section { display: none; background: #fff; padding: 15px; border-radius: 8px; border: 1px dashed var(--primary-color); margin-top: 5px; }
+        .ingredients-section.active { display: block; }
+        .ing-list { list-style: none; margin-bottom: 15px; }
+        .ing-list li { margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+        .ing-list input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
+        .ing-list label { cursor: pointer; font-size: 0.95rem; }
+        .add-to-cart-btn {
+            background-color: var(--primary-color); color: white; border: none; padding: 10px; border-radius: 5px;
+            cursor: pointer; width: 100%; font-weight: 600; transition: background-color 0.2s;
+        }
+        .add-to-cart-btn:hover { background-color: #1b5e20; }
+
+        #cart-container { max-width: 700px; margin: 0 auto; background: var(--card-bg); padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); }
+        #cart-container h2 { color: var(--primary-color); margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
+        .cart-input-group { display: flex; gap: 10px; margin-bottom: 25px; }
+        .cart-input-group input { flex: 1; padding: 12px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 1rem; }
+        .cart-input-group button { background: var(--text-main); color: white; border: none; padding: 0 25px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .cart-list { list-style: none; }
+        .cart-list li { display: flex; justify-content: space-between; align-items: center; padding: 15px 10px; border-bottom: 1px solid var(--border-color); font-size: 1.1rem; }
+        .cart-list li:last-child { border-bottom: none; }
+        .remove-btn { background: #ffebee; border: none; color: #d32f2f; cursor: pointer; font-size: 1.2rem; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+        .remove-btn:hover { background: #ffcdd2; }
+
+        /* --- NEW: RECIPES STYLES --- */
+        .recipe-thumb-card { cursor: pointer; }
+        .recipe-thumb-img { width: 100%; height: 200px; object-fit: cover; }
+        .recipe-thumb-info { padding: 15px; }
+        .recipe-thumb-info h3 { color: var(--primary-color); margin-bottom: 5px; }
+        .recipe-thumb-info p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 10px; }
+        .recipe-time { font-size: 0.85rem; background: #e8f5e9; color: var(--primary-color); padding: 3px 8px; border-radius: 12px; display: inline-block; font-weight: bold; }
+
+        #recipe-detail-container { max-width: 800px; margin: 0 auto; background: var(--card-bg); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); padding-bottom: 20px;}
+        .back-btn { background: #f1f1f1; border: none; padding: 10px 20px; margin: 20px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 1rem; transition: background 0.2s;}
+        .back-btn:hover { background: #e0e0e0; }
+        
+        .gallery { display: flex; gap: 10px; overflow-x: auto; padding: 0 20px 20px 20px; }
+        .gallery img { height: 250px; border-radius: 8px; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        
+        .recipe-header { padding: 0 20px; margin-bottom: 20px; }
+        .recipe-header h2 { color: var(--primary-color); font-size: 2rem; margin-bottom: 5px;}
+        
+        .recipe-section { padding: 0 20px 20px 20px; }
+        .recipe-section h3 { margin-bottom: 10px; border-bottom: 2px solid var(--border-color); padding-bottom: 5px;}
+        .recipe-instructions { white-space: pre-line; color: var(--text-main); line-height: 1.8; }
+
+        /* Comments */
+        .comments-area { background: var(--meal-bg); padding: 20px; margin: 20px; border-radius: 8px; }
+        .comments-list { list-style: none; margin-bottom: 15px; max-height: 300px; overflow-y: auto; }
+        .comments-list li { background: white; padding: 10px 15px; border-radius: 8px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .comments-list li .date { font-size: 0.75rem; color: #999; display: block; margin-top: 5px; }
+        
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.6rem; }
+            .grid { grid-template-columns: 1fr; }
+            .cart-input-group { flex-direction: column; }
+            .cart-input-group button { padding: 12px; }
+            .gallery img { height: 200px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>🍏 Plan Ishrane</h1>
+        <div class="tabs">
+            <button class="tab-btn active" id="btn-all" onclick="setTab('all')">Svi Dani</button>
+            <button class="tab-btn" id="btn-fav" onclick="setTab('fav')">❤️ Omiljeno</button>
+            <button class="tab-btn" id="btn-cart" onclick="setTab('cart')">🛒 Korpa</button>
+            <button class="tab-btn" id="btn-recipes" onclick="setTab('recipes')">📖 Recepti</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div id="meal-grid" class="grid"></div>
+        <div id="cart-container" style="display: none;"></div>
+        
+        <div id="recipes-list-container" class="grid" style="display: none;"></div>
+        <div id="recipe-detail-container" style="display: none;"></div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getDatabase, ref, onValue, set, push } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+
+        // Firebase Setup
+        const firebaseConfig = {
+            apiKey: "AIzaSyDMyCGExRa6ZCACyf9WXcxHAup0TJvGbTk",
+            authDomain: "meals-9a733.firebaseapp.com",
+            databaseURL: "https://meals-9a733-default-rtdb.europe-west1.firebasedatabase.app/",
+            projectId: "meals-9a733",
+            storageBucket: "meals-9a733.firebasestorage.app",
+            messagingSenderId: "666819455543",
+            appId: "1:666819455543:web:e4d8a42ede782047af6db2"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Database paths
+        const favRef = ref(db, 'favorites');
+        const cartRef = ref(db, 'cartItems');
+        const commentsRef = ref(db, 'recipeComments'); // New DB path for comments
+
+        // State Variables
+        let dietData = {};
+        let recipesData = {}; // New variable for recipes
+        let favorites = [];
+        let cartItems = [];
+        let allComments = {}; // Store all comments
+        let currentTab = 'all';
+        let currentlyOpenRecipeId = null;
+
+        // Firebase Listeners
+        onValue(favRef, (snapshot) => {
+            favorites = snapshot.val() || [];
+            if (currentTab === 'all' || currentTab === 'fav') renderCards();
+        });
+
+        onValue(cartRef, (snapshot) => {
+            cartItems = snapshot.val() || [];
+            if (currentTab === 'cart') renderCart();
+        });
+
+        onValue(commentsRef, (snapshot) => {
+            allComments = snapshot.val() || {};
+            // If a recipe is currently open, refresh its comments
+            if (currentTab === 'recipes' && currentlyOpenRecipeId) {
+                renderComments(currentlyOpenRecipeId);
+            }
+        });
+
+        async function init() {
+            // Load Diet Plan
+            try {
+                const response = await fetch('meal_plan.json');
+                if (response.ok) dietData = await response.json();
+            } catch (error) { console.error("Error loading meal_plan.json"); }
+
+            // Load Recipes
+            try {
+                const responseRec = await fetch('recepti.json');
+                if (responseRec.ok) recipesData = await responseRec.json();
+            } catch (error) { console.error("Nema recepti.json fajla, napravite ga."); }
+
+            renderCards();
+        }
+
+        // --- GLOBAL FUNCTIONS ---
+        window.setTab = function (tabName) {
+            currentTab = tabName;
+            document.getElementById('btn-all').classList.toggle('active', tabName === 'all');
+            document.getElementById('btn-fav').classList.toggle('active', tabName === 'fav');
+            document.getElementById('btn-cart').classList.toggle('active', tabName === 'cart');
+            document.getElementById('btn-recipes').classList.toggle('active', tabName === 'recipes');
+
+            // Hide all containers
+            document.getElementById('meal-grid').style.display = 'none';
+            document.getElementById('cart-container').style.display = 'none';
+            document.getElementById('recipes-list-container').style.display = 'none';
+            document.getElementById('recipe-detail-container').style.display = 'none';
+            
+            currentlyOpenRecipeId = null; // Reset open recipe
+
+            if (tabName === 'cart') {
+                document.getElementById('cart-container').style.display = 'block';
+                renderCart();
+            } else if (tabName === 'recipes') {
+                document.getElementById('recipes-list-container').style.display = 'grid';
+                renderRecipesList();
+            } else {
+                document.getElementById('meal-grid').style.display = 'grid';
+                renderCards();
+            }
+        };
+
+        window.toggleFav = function (dayKey) {
+            let updatedFavs = [...favorites];
+            if (updatedFavs.includes(dayKey)) updatedFavs = updatedFavs.filter(d => d !== dayKey);
+            else updatedFavs.push(dayKey);
+            set(favRef, updatedFavs);
+        };
+
+        window.addToCart = function (sectionId) {
+            const section = document.getElementById(`ing-${sectionId}`);
+            if(!section) return;
+            const checkboxes = section.querySelectorAll('input[type="checkbox"]:checked');
+            let addedCount = 0;
+            let updatedCart = [...cartItems];
+
+            checkboxes.forEach(cb => {
+                const ingredient = cb.value;
+                if (!updatedCart.includes(ingredient)) updatedCart.push(ingredient);
+                cb.checked = false;
+                addedCount++;
+            });
+
+            if (addedCount > 0) {
+                set(cartRef, updatedCart);
+                alert(`Uspešno dodato ${addedCount} sastojka u korpu!`);
+            } else {
+                alert('Molimo Vas da označite bar jedan sastojak pre slanja u korpu.');
+            }
+        };
+
+        window.addManualItem = function () {
+            const input = document.getElementById('manual-item-input');
+            const val = input.value.trim();
+            if (val && !cartItems.includes(val)) {
+                let updatedCart = [...cartItems, val];
+                set(cartRef, updatedCart);
+            } else if (cartItems.includes(val)) {
+                alert('Ovaj sastojak se već nalazi na Vašem spisku!');
+            }
+            input.value = '';
+            input.focus();
+        };
+
+        window.handleCartKeyPress = function (e) { if (e.key === 'Enter') addManualItem(); };
+        window.removeCartItem = function (index) {
+            let updatedCart = [...cartItems];
+            updatedCart.splice(index, 1);
+            set(cartRef, updatedCart);
+        };
+
+        // --- DIET PLAN RENDERING ---
+        function renderCards() {
+            const grid = document.getElementById('meal-grid');
+            grid.innerHTML = '';
+            let displayedCount = 0;
+
+            for (const [dayName, dayData] of Object.entries(dietData)) {
+                const isFav = favorites.includes(dayName);
+                if (currentTab === 'fav' && !isFav) continue;
+                displayedCount++;
+                const cleanDayId = dayName.replace(/\s+/g, '-');
+
+                const card = document.createElement('div');
+                card.className = 'card';
+
+                const header = document.createElement('div');
+                header.className = 'card-header';
+                header.innerHTML = `<h2>${dayName}</h2><button class="fav-btn" onclick="toggleFav('${dayName}')">${isFav ? '❤️' : '🤍'}</button>`;
+                card.appendChild(header);
+
+                const body = document.createElement('div');
+                body.className = 'card-body';
+
+                for (const [mealType, description] of Object.entries(dayData)) {
+                    if (mealType === "Sastojci") continue;
+                    const mealDiv = document.createElement('div');
+                    mealDiv.className = 'meal';
+                    mealDiv.innerHTML = `<h3>${mealType}</h3><p>${description}</p>`;
+                    body.appendChild(mealDiv);
+                }
+
+                if (dayData["Sastojci"] && Array.isArray(dayData["Sastojci"])) {
+                    const toggleBtn = document.createElement('button');
+                    toggleBtn.className = 'toggle-ing-btn';
+                    toggleBtn.innerText = 'Prikaži sastojke 🛒';
+
+                    const ingSection = document.createElement('div');
+                    ingSection.className = 'ingredients-section';
+                    ingSection.id = `ing-${cleanDayId}`;
+
+                    toggleBtn.onclick = () => ingSection.classList.toggle('active');
+
+                    const ul = document.createElement('ul');
+                    ul.className = 'ing-list';
+                    dayData["Sastojci"].forEach((item, index) => {
+                        const checkboxId = `cb-${cleanDayId}-${index}`;
+                        const li = document.createElement('li');
+                        li.innerHTML = `<input type="checkbox" id="${checkboxId}" value="${item}"> <label for="${checkboxId}">${item}</label>`;
+                        ul.appendChild(li);
+                    });
+
+                    const sendBtn = document.createElement('button');
+                    sendBtn.className = 'add-to-cart-btn';
+                    sendBtn.innerText = 'Pošalji u korpu';
+                    sendBtn.onclick = () => addToCart(cleanDayId);
+
+                    ingSection.appendChild(ul);
+                    ingSection.appendChild(sendBtn);
+                    body.appendChild(toggleBtn);
+                    body.appendChild(ingSection);
+                }
+
+                card.appendChild(body);
+                grid.appendChild(card);
+            }
+
+            if (displayedCount === 0) {
+                grid.innerHTML = currentTab === 'fav'
+                    ? `<div class="empty-state">Još uvek nemate omiljene dane. Kliknite na 🤍 da ih dodate!</div>`
+                    : `<div class="empty-state">Nema dostupnih podataka.</div>`;
+            }
+        }
+
+        // --- CART RENDERING ---
+        function renderCart() {
+            const container = document.getElementById('cart-container');
+            container.innerHTML = `
+                <h2>Vaš spisak za kupovinu</h2>
+                <div class="cart-input-group">
+                    <input type="text" id="manual-item-input" placeholder="Unesite novi sastojak..." onkeypress="handleCartKeyPress(event)">
+                    <button onclick="addManualItem()">Dodaj</button>
+                </div>
+                <ul class="cart-list" id="cart-list"></ul>
+            `;
+            const list = document.getElementById('cart-list');
+            if (cartItems.length === 0) {
+                list.innerHTML = '<li style="color: var(--text-muted); justify-content: center; border: none;">Vaša korpa je trenutno prazna.</li>';
+            } else {
+                cartItems.forEach((item, index) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span>${item}</span> <button class="remove-btn" onclick="removeCartItem(${index})" title="Obriši">🗑️</button>`;
+                    list.appendChild(li);
+                });
+            }
+        }
+
+        // --- RECIPES RENDERING ---
+        window.renderRecipesList = function() {
+            const grid = document.getElementById('recipes-list-container');
+            grid.innerHTML = '';
+            
+            if (Object.keys(recipesData).length === 0) {
+                grid.innerHTML = `<div class="empty-state">Još uvek niste dodali nijedan recept u recepti.json fajl.</div>`;
+                return;
+            }
+
+            for (const [recipeId, recipe] of Object.entries(recipesData)) {
+                const card = document.createElement('div');
+                card.className = 'card recipe-thumb-card';
+                card.onclick = () => openRecipe(recipeId);
+
+                // Uzimamo prvu sliku za thumbnail, ili sivi blok ako nema
+                const firstImg = (recipe.Slike && recipe.Slike.length > 0) ? recipe.Slike[0] : 'https://via.placeholder.com/400x200?text=Nema+slike';
+                
+                card.innerHTML = `
+                    <img src="${firstImg}" alt="${recipe.Ime}" class="recipe-thumb-img">
+                    <div class="recipe-thumb-info">
+                        <h3>${recipe.Ime}</h3>
+                        <p>${recipe.KratakOpis || ''}</p>
+                        <span class="recipe-time">⏱️ ${recipe.Vreme || 'N/A'}</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            }
+        };
+
+        window.openRecipe = function(recipeId) {
+            const recipe = recipesData[recipeId];
+            if (!recipe) return;
+            currentlyOpenRecipeId = recipeId;
+
+            document.getElementById('recipes-list-container').style.display = 'none';
+            const detailContainer = document.getElementById('recipe-detail-container');
+            detailContainer.style.display = 'block';
+            
+            // Kreiramo galeriju
+            let galleryHTML = '';
+            if (recipe.Slike && recipe.Slike.length > 0) {
+                galleryHTML = '<div class="gallery">';
+                recipe.Slike.forEach(imgUrl => {
+                    galleryHTML += `<img src="${imgUrl}" alt="Slika recepta">`;
+                });
+                galleryHTML += '</div>';
+            }
+
+            // Kreiramo listu sastojaka (iste klase da radi dodavanje u korpu)
+            let ingredientsHTML = '';
+            if (recipe.Sastojci && recipe.Sastojci.length > 0) {
+                ingredientsHTML = `
+                    <div class="recipe-section">
+                        <h3>Sastojci (🛒 Ubaci u korpu)</h3>
+                        <div class="ingredients-section active" id="ing-${recipeId}" style="border: none; padding: 0;">
+                            <ul class="ing-list" style="margin-top: 10px;">
+                `;
+                recipe.Sastojci.forEach((item, index) => {
+                    const checkboxId = `cb-rec-${recipeId}-${index}`;
+                    ingredientsHTML += `
+                        <li>
+                            <input type="checkbox" id="${checkboxId}" value="${item}">
+                            <label for="${checkboxId}">${item}</label>
+                        </li>
+                    `;
+                });
+                ingredientsHTML += `
+                            </ul>
+                            <button class="add-to-cart-btn" onclick="addToCart('${recipeId}')">Pošalji u korpu</button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            detailContainer.innerHTML = `
+                <button class="back-btn" onclick="setTab('recipes')">← Nazad na recepte</button>
+                <div class="recipe-header">
+                    <h2>${recipe.Ime}</h2>
+                    <span class="recipe-time">⏱️ ${recipe.Vreme || 'N/A'}</span>
+                </div>
+                ${galleryHTML}
+                ${ingredientsHTML}
+                <div class="recipe-section">
+                    <h3>Uputstvo za pripremu</h3>
+                    <p class="recipe-instructions">${recipe.Uputstvo}</p>
+                </div>
+                
+                <div class="comments-area">
+                    <h3>Komentari i beleške</h3>
+                    <ul class="comments-list" id="recipe-comments-list">
+                        </ul>
+                    <div class="cart-input-group" style="margin-bottom:0; margin-top:15px;">
+                        <input type="text" id="new-comment-input" placeholder="Napiši belešku (npr. 'Staviti manje soli')...">
+                        <button onclick="addComment('${recipeId}')">Dodaj</button>
+                    </div>
+                </div>
+            `;
+            
+            renderComments(recipeId);
+        };
+
+        // --- COMMENTS LOGIC ---
+        window.renderComments = function(recipeId) {
+            const ul = document.getElementById('recipe-comments-list');
+            if(!ul) return; // Nismo u pogledu detalja
+            
+            ul.innerHTML = '';
+            const commentsObj = allComments[recipeId] || {};
+            const commentKeys = Object.keys(commentsObj);
+            
+            if (commentKeys.length === 0) {
+                ul.innerHTML = '<li style="background:transparent; box-shadow:none; color:var(--text-muted); font-style:italic;">Nema komentara. Budite prvi!</li>';
+                return;
+            }
+
+            commentKeys.forEach(key => {
+                const c = commentsObj[key];
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    ${c.text}
+                    <span class="date">${new Date(c.timestamp).toLocaleString('sr-RS')}</span>
+                `;
+                ul.appendChild(li);
+            });
+            ul.scrollTop = ul.scrollHeight; // Scroll to bottom
+        };
+
+        window.addComment = function(recipeId) {
+            const input = document.getElementById('new-comment-input');
+            const text = input.value.trim();
+            if(!text) return;
+
+            // Koristimo push() da napravimo jedinstven ID za svaki novi komentar
+            const newCommentRef = push(ref(db, `recipeComments/${recipeId}`));
+            set(newCommentRef, {
+                text: text,
+                timestamp: Date.now()
+            });
+
+            input.value = '';
+        };
+
+        init();
+    </script>
+</body>
+
+</html>
